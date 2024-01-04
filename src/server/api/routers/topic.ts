@@ -4,10 +4,6 @@ import {
   protectedProcedure,
 } from "~/server/api/trpc";
 
-// Define a Zod schema for your input data
-const CreateTopicInput = z.object({
-  title: z.string(),
-});
 
 export const topicRouter = createTRPCRouter({
   getAll: protectedProcedure.query(({ ctx }) => {
@@ -19,7 +15,7 @@ export const topicRouter = createTRPCRouter({
   }),
 
   create: protectedProcedure
-    .input(CreateTopicInput)
+  .input(z.object({ title: z.string() }))
     .mutation(async ({ ctx, input }) => {
       // simulate a slow db call
       await new Promise((resolve) => setTimeout(resolve, 1000));
