@@ -16,8 +16,7 @@ export const topicRouter = createTRPCRouter({
 
   create: protectedProcedure
   .input(z.object({ title: z.string() }))
-    .mutation(async ({ ctx, input }) => {
-      // simulate a slow db call
+    .mutation(async ({ ctx, input }) => { 
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       return ctx.db.topic.create({

@@ -20,7 +20,7 @@ export const NoteEditor = ({
         <h2 className="card-title">
           <input
             type="text"
-            placeholder="Note title"
+            placeholder="Title"
             className="input-primary input input-lg w-full font-bold"
             value={title}
             onChange={(e) => setTitle(e.currentTarget.value)}
@@ -36,10 +36,10 @@ export const NoteEditor = ({
             markdown({ base: markdownLanguage, codeLanguages: languages }),
           ]}
           onChange={(value) => setCode(value)}
-          className="border border-gray-300"
+          className="border border-gray-300 text-black"
         />
       </div>
-      <div className="card-actions justify-end">
+      <div className="card-actions justify-end p-2">
         <button
           onClick={() => {
             onSave({
@@ -49,7 +49,7 @@ export const NoteEditor = ({
             setCode("");
             setTitle("");
           }}
-          className="btn-primary btn"
+          className="btn-success text-white font-semibold btn"
           disabled={title.trim().length === 0 || code.trim().length === 0}
         >
           Save

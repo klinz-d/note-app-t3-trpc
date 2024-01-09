@@ -11,7 +11,7 @@ export const noteRouter = createTRPCRouter({
     delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      return ctx.db.note.delete({
+      return await ctx.db.note.delete({
         where: {
           id: input.id,
         },
@@ -24,7 +24,7 @@ export const noteRouter = createTRPCRouter({
       z.object({ title: z.string(), content: z.string(), topicId: z.string() })
     )
     .mutation(async ({ ctx, input }) => {
-      return ctx.db.note.create({
+      return await ctx.db.note.create({
         data: {
           title: input.title,
           topicId: input.topicId,
@@ -33,10 +33,27 @@ export const noteRouter = createTRPCRouter({
       });
     }),
 
+
+    update: protectedProcedure
+    .input(z.object({ id: z.string(), title: z.string(), content: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.note.update({
+        where: {
+          id: input.id,  
+        },
+        data: {
+          title: input.title,
+          content: input.content,
+        },
+      });
+    }),
+  
+  
+
     getAll: protectedProcedure
     .input(z.object({ topicId: z.string() }))
-    .query(({ ctx, input }) => {
-      return ctx.db.note.findMany({
+    .query(async ({ ctx, input }) => {
+      return await ctx.db.note.findMany({
         where: {
           topicId: input.topicId,
         },
